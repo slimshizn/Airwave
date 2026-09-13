@@ -2,6 +2,19 @@
 
 All notable changes to Airwave are documented here.
 
+## [0.13.40] - 2026-09-12
+
+Site + downloads — the Linux desktop client is officially available.
+
+### Changed
+- Marked the Linux desktop client (tv-tauri) as fully supported across the site: the platform matrix
+  (`planned` → full support), the home page platform tiles (Linux is now "Ready", nothing left in "Soon"),
+  the client downloads table, the OS-aware hero download button, and the platforms / downloads docs.
+  Airwave's desktop client now covers Windows, macOS, and Linux.
+- The tv-tauri release workflow now attaches the Linux `Airwave-Client_<ver>_x86_64.AppImage` to the GitHub
+  Release (it was a CI artifact only) and lists it in the client release notes, so the site's download links
+  resolve to the real asset. The Linux libmpv runtime is published for both x64 and arm64.
+
 ## [0.13.39] - 2026-09-12
 
 Desktop (Linux) — give the bundled mpv a TLS backend so the capability diagnostic works.

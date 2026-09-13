@@ -112,7 +112,7 @@ export async function ClientDownloads() {
     { platform: "Windows", sub: "x64", Icon: FaWindows, delivery: "Desktop app (Tauri)", href: dl.client.windows, getLabel: "Download (.exe)", external: true, status: "available" },
     { platform: "macOS", sub: "Apple Silicon", Icon: FaApple, delivery: "Desktop app (Tauri)", href: dl.client.macos, getLabel: "Download (.dmg)", external: true, status: "available" },
     { platform: "macOS", sub: "Intel", Icon: FaApple, delivery: "Desktop app (Tauri)", href: dl.client.macosIntel, getLabel: "Download (.dmg)", external: true, status: "available" },
-    { platform: "Linux", Icon: FaLinux, delivery: "Desktop app (Tauri)", getLabel: "From source", status: "planned", statusLabel: "Next" },
+    { platform: "Linux", sub: "x64", Icon: FaLinux, delivery: "Desktop app (Tauri)", href: dl.client.linux, getLabel: "Download (.AppImage)", external: true, status: "available" },
     { platform: "Any browser", Icon: FaChrome, delivery: "Web player", href: SELF_HOST, getLabel: "Self-host (tvweb role)", status: "available" },
   ];
   return <DownloadTable caption="Airwave client downloads by platform" rows={rows} />;

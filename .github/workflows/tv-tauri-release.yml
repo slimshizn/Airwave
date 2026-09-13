@@ -494,8 +494,9 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p release
-          # Gather the distributables + updater sigs (NOT the frag-*.json).
-          find dl -type f \( -name '*.exe' -o -name '*.dmg' -o -name '*.app.tar.gz' -o -name '*.sig' \) \
+          # Gather the distributables + updater sigs (NOT the frag-*.json). The Linux AppImage is a plain
+          # direct download (no updater/latest.json entry yet), so it's attached but not in latest.json.
+          find dl -type f \( -name '*.exe' -o -name '*.dmg' -o -name '*.app.tar.gz' -o -name '*.AppImage' -o -name '*.sig' \) \
             -exec cp {} release/ \;
           VER="$(node -p "require('./apps/tv-tauri/package.json').version")"
           export VER
@@ -529,6 +530,7 @@ jobs:
             echo 'The 10-foot TV / DVR viewer — channel guide, glass player, bumpers — direct-playing from your Plex via bundled libmpv. Signed, notarized, and self-updating.'
             echo "- **Windows** — \`Airwave-Client_${VER}_x64-setup.exe\`"
             echo "- **macOS** — \`Airwave-Client_${VER}_aarch64.dmg\` (Apple Silicon) · \`Airwave-Client_${VER}_x86_64.dmg\` (Intel)"
+            echo "- **Linux** — \`Airwave-Client_${VER}_x86_64.AppImage\` (x64; Wayland/X11, self-contained)"
             echo 'NOTES'
           } >> "$GITHUB_OUTPUT"
 
