@@ -47,16 +47,17 @@ type EGLSurface = *mut c_void;
 const EGL_PLATFORM_WAYLAND_KHR: u32 = 0x31D8;
 const EGL_OPENGL_API: u32 = 0x30A2;
 const EGL_NO_CONTEXT: EGLContext = ptr::null_mut();
-const EGL_NONE: isize = 0x3038;
-const EGL_SURFACE_TYPE: isize = 0x3033;
-const EGL_WINDOW_BIT: isize = 0x0004;
-const EGL_RENDERABLE_TYPE: isize = 0x3040;
-const EGL_OPENGL_BIT: isize = 0x0008;
-const EGL_RED_SIZE: isize = 0x3024;
-const EGL_GREEN_SIZE: isize = 0x3023;
-const EGL_BLUE_SIZE: isize = 0x3022;
-const EGL_ALPHA_SIZE: isize = 0x3021;
-const EGL_CONTEXT_MAJOR_VERSION: isize = 0x3098;
+// EGL attribute lists (eglChooseConfig/eglCreateContext/eglCreateWindowSurface) are EGLint = 32-bit.
+const EGL_NONE: c_int = 0x3038;
+const EGL_SURFACE_TYPE: c_int = 0x3033;
+const EGL_WINDOW_BIT: c_int = 0x0004;
+const EGL_RENDERABLE_TYPE: c_int = 0x3040;
+const EGL_OPENGL_BIT: c_int = 0x0008;
+const EGL_RED_SIZE: c_int = 0x3024;
+const EGL_GREEN_SIZE: c_int = 0x3023;
+const EGL_BLUE_SIZE: c_int = 0x3022;
+const EGL_ALPHA_SIZE: c_int = 0x3021;
+const EGL_CONTEXT_MAJOR_VERSION: c_int = 0x3098;
 
 #[link(name = "EGL")]
 extern "C" {
@@ -69,7 +70,7 @@ extern "C" {
     fn eglBindAPI(api: u32) -> u32;
     fn eglChooseConfig(
         dpy: EGLDisplay,
-        attribs: *const isize,
+        attribs: *const c_int,
         configs: *mut EGLConfig,
         size: i32,
         num: *mut i32,
@@ -78,13 +79,13 @@ extern "C" {
         dpy: EGLDisplay,
         config: EGLConfig,
         share: EGLContext,
-        attribs: *const isize,
+        attribs: *const c_int,
     ) -> EGLContext;
     fn eglCreateWindowSurface(
         dpy: EGLDisplay,
         config: EGLConfig,
         win: *mut c_void,
-        attribs: *const isize,
+        attribs: *const c_int,
     ) -> EGLSurface;
     fn eglMakeCurrent(dpy: EGLDisplay, draw: EGLSurface, read: EGLSurface, ctx: EGLContext) -> u32;
     fn eglSwapBuffers(dpy: EGLDisplay, surface: EGLSurface) -> u32;
@@ -257,7 +258,7 @@ pub fn setup(window: &tauri::WebviewWindow, mpv: &Arc<mpv::Mpv>) -> Result<(), S
     if unsafe { eglBindAPI(EGL_OPENGL_API) } == 0 {
         return Err(format!("eglBindAPI failed: 0x{:x}", egl_err()));
     }
-    let cfg_attribs: [isize; 13] = [
+    let cfg_attribs: [c_int; 13] = [
         EGL_SURFACE_TYPE, EGL_WINDOW_BIT,
         EGL_RENDERABLE_TYPE, EGL_OPENGL_BIT,
         EGL_RED_SIZE, 8,
@@ -273,7 +274,7 @@ pub fn setup(window: &tauri::WebviewWindow, mpv: &Arc<mpv::Mpv>) -> Result<(), S
     {
         return Err(format!("eglChooseConfig failed: 0x{:x}", egl_err()));
     }
-    let ctx_attribs: [isize; 3] = [EGL_CONTEXT_MAJOR_VERSION, 3, EGL_NONE];
+    let ctx_attribs: [c_int; 3] = [EGL_CONTEXT_MAJOR_VERSION, 3, EGL_NONE];
     let egl_ctx = unsafe { eglCreateContext(dpy, config, EGL_NO_CONTEXT, ctx_attribs.as_ptr()) };
     if egl_ctx.is_null() {
         return Err(format!("eglCreateContext failed: 0x{:x}", egl_err()));
