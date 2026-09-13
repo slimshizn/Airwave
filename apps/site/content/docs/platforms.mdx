@@ -26,9 +26,10 @@ a 6-inch screen.
 > **Store status.** Airwave is live on **Apple TV** (App Store), **Fire TV** (Amazon Appstore), and **Roku**
 > (Roku Channel Store), with **iPad** in App Store review and **Android TV / Google TV** in closed testing on
 > Google Play. **LG webOS** runs daily on a real LG C2 and installs by sideload while its store listing is in
-> progress. The **desktop app** ships on **Windows and macOS** (Apple Silicon + Intel) as signed,
-> self-updating installers; **Linux** shares the same Tauri + mpv core and is next. Because Airwave is
-> source-available, you can also **build and sideload** any native app yourself.
+> progress. The **desktop app** ships on **Windows, macOS** (Apple Silicon + Intel), and **Linux**: Windows
+> and macOS as signed, self-updating installers, and Linux as a self-contained AppImage (Wayland and X11),
+> all on the same Tauri + mpv core. Because Airwave is source-available, you can also **build and sideload**
+> any native app yourself.
 
 ## Native apps (`tv-native`)
 
@@ -78,8 +79,10 @@ Airwave account), it runs the same **capability diagnostic** (mpv-measured), and
 builds are Developer-ID signed **and notarized**. On Windows mpv renders into a child window behind the
 web view; on macOS it renders through mpv's **render API** into a GL surface behind the transparent web
 view (with **HDR-EDR passthrough** on HDR-capable displays), so the glass chrome composites over the video
-either way. **Linux** shares the same core and is the next build target. Distributed as a small signed
-installer per OS, or built from source.
+either way. On **Linux** it renders through the same mpv render API into a **Wayland subsurface** behind the
+transparent web view (no GTK reparenting), matching the macOS approach. Distributed as signed, self-updating
+installers on Windows and macOS and a self-contained **AppImage** (Wayland and X11) on Linux, or built from
+source.
 
 ## Roku (`tv-roku`)
 

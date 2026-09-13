@@ -19,7 +19,7 @@ export type HeroDownloads = {
   version: string | null;
   releases: string;
   server: { windows: string; macos: string; macosIntel: string; linux: string };
-  client: { windows: string; macos: string; macosIntel: string };
+  client: { windows: string; macos: string; macosIntel: string; linux: string };
 };
 
 export async function getHeroDownloads(): Promise<HeroDownloads> {
@@ -37,6 +37,7 @@ export async function getHeroDownloads(): Promise<HeroDownloads> {
       windows: rel.find(/^Airwave-Client_.*_x64-setup\.exe$/),
       macos: rel.find(/^Airwave-Client_.*_aarch64\.dmg$/),
       macosIntel: rel.find(/^Airwave-Client_.*_x86_64\.dmg$/),
+      linux: rel.find(/^Airwave-Client_.*_x86_64\.AppImage$/),
     },
   };
 }

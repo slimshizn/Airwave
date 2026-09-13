@@ -116,12 +116,13 @@ const PLATFORMS: { name: string; Icon: ComponentType<{ className?: string }>; ba
   { name: "Any browser", Icon: Globe, badge: "Ready" },
   { name: "Fire TV", Icon: FaAmazon, badge: "Ready" },
   { name: "Samsung (Tizen)", Icon: SiSamsung, badge: "Ready" },
+  { name: "Linux", Icon: FaLinux, badge: "Ready" },
   { name: "Android TV", Icon: SiAndroid, badge: "WIP" },
 ];
 
-const COMING_SOON: { name: string; Icon: ComponentType<{ className?: string }> }[] = [
-  { name: "Linux", Icon: FaLinux },
-];
+// Every client platform now ships; nothing pending. (Kept for the "Soon" tile rendering if a future
+// platform is queued.)
+const COMING_SOON: { name: string; Icon: ComponentType<{ className?: string }> }[] = [];
 
 export default async function HomePage() {
   const dl = await getHeroDownloads();

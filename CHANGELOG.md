@@ -2,6 +2,50 @@
 
 All notable changes to Airwave are documented here.
 
+## [0.13.40] - 2026-09-12
+
+Site + downloads — the Linux desktop client is officially available.
+
+### Changed
+- Marked the Linux desktop client (tv-tauri) as fully supported across the site: the platform matrix
+  (`planned` → full support), the home page platform tiles (Linux is now "Ready", nothing left in "Soon"),
+  the client downloads table, the OS-aware hero download button, and the platforms / downloads docs.
+  Airwave's desktop client now covers Windows, macOS, and Linux.
+- The tv-tauri release workflow now attaches the Linux `Airwave-Client_<ver>_x86_64.AppImage` to the GitHub
+  Release (it was a CI artifact only) and lists it in the client release notes, so the site's download links
+  resolve to the real asset. The Linux libmpv runtime is published for both x64 and arm64.
+
+## [0.13.39] - 2026-09-12
+
+Desktop (Linux) — give the bundled mpv a TLS backend so the capability diagnostic works.
+
+### Fixed
+- The Linux libmpv build now links OpenSSL (`--enable-openssl --enable-version3` in the FFmpeg build), giving
+  mpv an `https` TLS backend. Windows and macOS get native TLS automatically (SChannel / SecureTransport);
+  Linux had none, so the on-device capability diagnostic — which fetches its test clips from the Airwave
+  server over `https` — failed every probe and defaulted the device profile to all-transcode. Live channel
+  playback was never affected (LAN Plex connections are plain `http`). Requires the Linux libmpv runtime
+  rebuilt from the `libmpv-linux` workflow (x64 and arm64).
+
+## [0.13.38] - 2026-09-12
+
+TV (desktop / tv-tauri) — Linux support: the Airwave desktop client now builds, runs, and plays on Linux.
+
+### Added
+- Linux (Wayland) is now a supported tv-tauri target, packaged as an AppImage in CI. This brings the desktop
+  client to every desktop OS. Video renders through mpv's render API into a Wayland subsurface placed behind
+  the transparent webview (the same render-API approach as macOS; Windows keeps its native-handle embed),
+  wired through a per-OS three-way video attach.
+
+### Fixed
+- AppImage packaging bundles the app with `linuxdeploy-plugin-gtk`, with its library-exclude list pruned to
+  only the host's GPU / display / Wayland libraries (libEGL, libGL, libdrm, libva, libvulkan, libwayland-*).
+  Bundling those made them shadow the host driver's own copies, which stopped WebKitGTK from creating an EGL
+  display and left a blank window on real GPUs and in VMs. Non-graphics libraries stay bundled so the
+  AppImage still runs on minimal distros that lack them (e.g. libselinux on Arch).
+- `setlocale(LC_NUMERIC, "C")` is now set before `mpv_create()` on Linux, which mpv requires or it refuses to
+  initialize.
+
 ## [0.13.37] - 2026-09-12
 
 TV (desktop / tv-tauri) — click the video to play/pause.

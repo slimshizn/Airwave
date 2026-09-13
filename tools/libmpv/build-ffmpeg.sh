@@ -187,7 +187,6 @@ CONFIGURE_ARGS=(
     --disable-debug
     --disable-doc
     --disable-programs
-    --disable-openssl
     --disable-encoders
     --enable-encoder=mjpeg
     --disable-muxers
@@ -206,6 +205,19 @@ if [ "$TARGET_OS" != "mingw32" ]; then
     CONFIGURE_ARGS+=(
         --enable-pic
     )
+fi
+
+# TLS backend for https:// (server clip URLs + Plex streams).
+if [ "$TARGET_OS" = "linux" ]; then
+    # Linux has NO OS-native TLS. configure auto-enables SChannel on Windows and SecureTransport on macOS,
+    # so those get https for free — but on Linux, without OpenSSL/GnuTLS there is no `tls`/`https` protocol
+    # at all, and every mpv fetch of an https URL fails (the "all transcode on Linux" symptom). Enable
+    # OpenSSL (3.x is Apache-2.0 = GPL-compatible). FFmpeg requires --enable-version3 to link OpenSSL >=3.0
+    # (upgrades the build's license to GPLv3, fine — libmpv is already GPL). Needs libssl-dev at build.
+    CONFIGURE_ARGS+=( --enable-version3 --enable-openssl )
+else
+    # Windows (SChannel) / macOS (SecureTransport) use the OS-native TLS; keep OpenSSL out of the build.
+    CONFIGURE_ARGS+=( --disable-openssl )
 fi
 
 echo "Configuring FFmpeg with prefix=$FFMPEG_PREFIX"

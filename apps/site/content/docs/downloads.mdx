@@ -44,9 +44,10 @@ small paid convenience**; the server, browser player, and desktop app are free, 
   Android TV / Fire TV via `adb install` of the APK, webOS via the **`ares-install`** CLI, and Samsung Tizen
   via Tizen Studio's **`tizen install`** (Developer Mode + a Samsung certificate). Every native app is
   buildable from the [GitHub repo](https://github.com/Quixomatic/Airwave).
-- **Desktop app** (Windows and macOS; Linux next) — download from the
+- **Desktop app** (Windows, macOS, and Linux): download from the
   [latest release](https://github.com/Quixomatic/Airwave/releases/latest); it reuses the web UI with a
-  native **mpv** engine for 4K HDR direct-play.
+  native **mpv** engine for 4K HDR direct-play. Windows and macOS are signed, self-updating installers;
+  Linux is a self-contained **AppImage** (Wayland and X11).
 - **Browser player** — no download: enable the **`tvweb`** role in your compose stack and open it in any
   browser. See [self-hosting](/docs/self-hosting).
 

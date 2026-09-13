@@ -150,6 +150,7 @@ export function HeroDownloadButtons({
     { id: "win", short: "Windows", label: "Windows (x64)", Icon: FaWindows, href: dl.client.windows, os: "windows" },
     { id: "mac", short: "macOS", label: "macOS (Apple Silicon)", Icon: FaApple, href: dl.client.macos, os: "macos" },
     { id: "mac-intel", short: "macOS", label: "macOS (Intel)", Icon: FaApple, href: dl.client.macosIntel },
+    { id: "linux", short: "Linux", label: "Linux (x64, AppImage)", Icon: FaLinux, href: dl.client.linux, os: "linux" },
   ];
 
   return (
