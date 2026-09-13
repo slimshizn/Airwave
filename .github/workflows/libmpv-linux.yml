@@ -43,7 +43,7 @@ jobs:
             build-essential git curl python3 meson ninja-build pkg-config patchelf nasm \
             libfreetype-dev libfribidi-dev liblcms2-dev libluajit-5.1-dev \
             libass-dev libopus-dev librubberband-dev \
-            zlib1g-dev libbz2-dev liblzma-dev \
+            zlib1g-dev libbz2-dev liblzma-dev libssl-dev \
             libpipewire-0.3-dev libpulse-dev \
             libxss-dev libxpresent-dev \
             libwayland-dev wayland-protocols libxkbcommon-dev \
@@ -94,7 +94,7 @@ jobs:
             build-essential git curl python3 meson ninja-build pkg-config patchelf nasm \
             libfreetype-dev libfribidi-dev liblcms2-dev libluajit-5.1-dev \
             libass-dev libopus-dev librubberband-dev \
-            zlib1g-dev libbz2-dev liblzma-dev \
+            zlib1g-dev libbz2-dev liblzma-dev libssl-dev \
             libpipewire-0.3-dev libpulse-dev \
             libxss-dev libxpresent-dev \
             libwayland-dev wayland-protocols libxkbcommon-dev \
